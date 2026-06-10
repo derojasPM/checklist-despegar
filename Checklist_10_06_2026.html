@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Generador de Checklists — Implementaciones Despegar</title>
+<link rel="icon" type="image/png" href="data:image/png;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCABlAVkDASIAAhEBAxEB/8QAHQABAAEFAQEBAAAAAAAAAAAAAAgBBAUGBwMCCf/EAEUQAAEDAwIDBQUEBQgLAAAAAAEAAgMEBREGBxIhMQgTQVFhFCIycYEVYpGhIzRCUrEWFyQzY5Kz0RglN1NkcoKissHw/8QAHAEBAAIDAQEBAAAAAAAAAAAAAAIDBAUGAQcI/8QANBEAAgEDAgQCBwcFAAAAAAAAAAECAwQRBSEGEjFRE0EyYXGBkdHwFBaCobGywSI1QmLx/9oADAMBAAIRAxEAPwDlqIi/RptQiIgCIiAIiIAiIgCIiAIiIAiIgCIiAIiIAiIgCIiAIiIAiIgCIiAIiIAiIgCIiAIiIAiIgCIiAIiIAiIgCIiAK5pqGuqYZJ6aiqp4oyA+SOFzmtJ8CQMAq2UmuxY/Nk1NHk8quE/iw/5LVazqL020lcqPNjG3Tq8EKk+SOSNYpao5xTTHBwfcK+e4m/3Mn90r9Ab5pjT97Y4XO00s7nDHecHDIPk8YcPxXJdebSVdvjkuGm5JKynblz6V/OVg+6f2/l1+a52y42t7iShUhyv1vb4lUbhMiv3cn7jvwXwurlec8MNQ3hnijlb5PaD/ABXRLU+8fzLeY5Yi3a7aWpZ2OkoT7PL1Dc5Yf/Y/+5LT6ylno6h1PUxmORvUHy8/ks6jcwreiySeTxREV56EREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBSX7FR/1Zqkf8TT/wDg9RoUlOxUf6Fqlv8Aa0x/KT/Jczxf/aan4f3Ipr+gyRKIi+MGAcR350hDRTM1LboRHFPJwVjGjAEh6P8Ar0PrjzK5OpW63trbvpG6W9zcmWmfwejwMtP94BRS6r6Dw5eSr2zhN5cdvd5GXRllBYzUNrjudE4BoFRGCYneOf3fkVk0XRwm4SUkWo5SQQSCCCOoKosrqunFPfagNADZCJAB6jn+eVil01OfPFS7loVV2Hs+bSR62dJfr+6RljgkMccUbuF1XIOo4uoYPEjmTyyMFdQuWqNgNOVp07JbLI7gd3UphtPfxsd0IdIGnJ8+Z6c1z95xHTo3DtqFKVWUevKuhVKrh4Sycx2A2psO4NiuVwu9fcqaSlqxAxtK9gBbwB2TxNdzyVyO4wNpblVUrHFzYZ5Imk9SGuIGfwU6tttOaUsluqq7Rpj+zLvI2raIZeOEHhDcs8gQBy8Dnp0UP9I6Pr9c7mVNgoHiIPq55KicjIgibIeJ+PE8wAPMha7Rdcdzc3VWrJqnFJpP/HrkjTqZbb6GnKilbdaXZLaKGnt12ttPcLpJGHHvaUVdS8dON3F7rATnl7o8gvYaP2k3dsFTV6Xgp7dXRe66akg9nlgfjl3keAHA+oOeeCsj72U0lVlQmqTfp42/57x4y642ImItso9B3eTdCHQFYWU1e6s9nkk6tDMcZkb5gs94fMKQuoxs5tBTUVpuOnWV1ZUxd5k0bKmeRoOC9734A5+GR44HJbC/12lbTp06UHUnNZSj27k5VEtluRORSA3Ik2L1FoCu1FZY2W26wnu4YKKIU87pj8LXxfC5nLJcByAODlevZT0hpjUum73Pf7FQXKaCvayJ9RCHuY3u2nAJ6DPNVT4hhTs53VSlKPK0mmsPL7dzx1MRy0R6JAGScBBzGQpX3CLY3ayo+zbrR0NTc5CZJe9o/a5mhxzzHCRG3yby5DoequLtt7tfunpeW5aO+z6Kr5iOroIu64JMfDNFgfUEA88hYX3upLFSdGcaT6Sa2+veeeMvNbESEWwW/R9+rddN0WylDLv7UaZ7HH3WFuS55P7oaC7PiPmpGT6V2f2hstHJqmnp7pc5vhkqaf2iaZw6lkfMMaM9eXhkkraahrlCzcIRi6k57qMd2139hKVRRIpopa2m27Lbu0NVS2i2UtJXwsy7uKYUlVEOgeMDDm5P3h5qN+42jrlorWE+nawOqJBwvppWN/WI3EhjgPMkEEeYKjpuu0r2rKhODp1I7uMu3dCFTmeHszWkUqdC7Q6K0RpRuotwm0dVWNjElQaw8VPTZxiNrOj3eGSCSegXpS3HYTcSY6apqK309XNmOmeygNHK52D/AFUnCPe8cePkVr58WUnKTo0Zzpx6yS2X17iPjLOyIpIpJdpjQ2kdMbcUdVY7BQUNWa+KAzxRBr3N7t5IJHnw5WP2I2atVdp9ms9cta+ilZ31JRyP4IxEBnvZT4gjmBnGOZznAyIcT2jsftkk0s4S82/Ue+KuXmI/Kilc7WPZ6rKv7BkorG2Eu7tsxtPBBnwxJwAAfeyB6rK6j2q2+se218motP0dRLT0FVUQVU7RJK08D3tw/qeHkAeuAOaxJcWxpSjGvbzg5NYyuvr3wR8buiHieOF3LsoaW05qebUf8oLLRXMU7abufaYw/g4u9zjPTOB+C2ncOu2X0fprUOmbZbLPPfY4ZAyF9GZXCd55DvS3ALOLPCD7oGAFmXHEKp3rs6dGU5LGcdMPG/sWSTqYly4IyIgGABknHmi6MtCIiAIiIAiIgCIiAKSHYpd7uq2eRpD/AIyjepFdin9a1Z/yUn8ZlzfFqzpFX8P7kVV/QZJNERfFjXnxUY9nkz04Tn8FDtvwj5KVG4d0ZZ9F3Stc/heKd0cXnxv91v5kKLAGBgdAu04UptQqT8m0vhn5mTQWzCIi64vNI13j7ZjwOfcNz/ectfWU1RVCqvdQ9vwsIjb/ANIwfzysWult4uNKKfYsRMDRZqKfssRyada4VosU74u7+LvsPLiPvcXF9VD9mA0BuOEDlhdu7OW7VDpKCTS+pZHx2mWUyUtUBxCme4+81wHPgJ5554JPgeXRrvtrsnfayTUQudFBBM7vJW0l1ZHTuPUnAPu58Q0hcPa3b0C7uIXNOTjUlzKSWc+r8/iUJ+HJ5XUt+xu+4u0FdG1BeaFtxIpOLpngb3nD6cX55WE7JLac611y92PaRKwM8+DvpuL8w38l0vSe4e1tLRPs9l1BZaCitpEEbXTshjdyyTHxEcY583DIJzzKivobWtVojcqo1FQNFTTvqZo6iJruU8DpCSAemeQIPmPIrAt7W41T7fy03Bz5Wk9ujzj2v+SCTnzbYJAbiVewzdaXBmsKeN19YWCqdJBVE/AOHBaOHHDjorfSutuz/pK4SV9gq2W+pliMb3x01WeJmQcEFpHUD5K5vVNs7vJHBcpLxFTXNkYYXNqG09WxueTXsfkOAOcHB68jzXhS/wAzGz9urJYKuC6XKoiMb2GZtVUzNP7GB7rGkjnyaPPKwoRpSt1bT8d1Nk4Z2/R7e75kcLGN8nMd3NwbLJvNZ9daLqWVxo6aPveOJ8Ye9rpAWniAPNjgM48vJdKdufsvuBSQDV9DDT1MbfdbcaUkxZ68EzAcD6j5BcH07ftJv3ObqDUWnmxWN1Q6X7OoR+ji/c90/G0dS0YyfD9ld2vehtmNx533q06ip7dVTe9MaGqjjLifF8UgPC76D1yt5qlpZ2saFOtCpHljhTj1X+rx23/gtnGKwnn2lrqPY7QepdMSXjby5d1LwufTmKr9oppnAfAS7Lm8/I8j4HovvsYAjSmoQ5paRcWZB6g901XtbqnbzZnQdVY9MXRl1ukrnvZC2obNI+dzQ3jlLfdY0AN5YHIchlWXYvLjpTUBe4ucbizJPie6atTdVbyppFw6spSp80eRy6tZ3/grk34bz0I7a1kuMms72+7cYuBuE3tHH1DuM8vljGPTC632NpK8a6vEUJf7AbdxVAB90Sd40Rk+uO8/NdFu9j2a3Sr5LrNXw091Y4xVXd1Yp58sPDiRh5HGMB2Dyxg4wly1nthtBpiotelnUlZXklwpKWfvpJJcYDppMnAHqc46BbO91p39j9gpUJeLJJYxsum/s7dCcp80eVLctrEy2f6X18MZZ3/2G0keUv6IH68GPzWV3bq9motUxs3Aha+7NpWmMyQVL8REuxgsHD14un1UX7PrO+23X7NbioE109qdUSl2Q2XiyHMI8GlpLR5DGOikjVXjaTeiy0rbxWw0FyhHuxzVDaeqgJ6taTye38Ry6ArE1LSathcUa1Vz8NQUXKD3TS/Q8nDlab6GP03qzs76du8V3skjKKuja5rJmUtZkBww4YLSCMfw9Fr26es9Eaz3O29rLJX+2+zXJkdU50EkQawzRFnxtGeYd0W22ey7M7SOdeZLzFWXERkROnqWVFRgjmI42AAE9M4+uMqOG4N+oNQawq7zZrPBY6aR4MMNOOEgg57x2OQeTzOOQ9epy9IsKN5dyr0vFaUWlObW+U1jGM+fk/aewipPKyd+7Z4r/wCS9gMXe/Z/tz/aOHPD3nB+j4v+/Hqoy0YqnVkDaHj9rMrBT8Hxd5xDgx68WMKUOg95tFav0s3T+4jqSkrHRCOoFYz+jVWP2w7o08s4OMHoSvuKo2B29nN9s5t9fc2fq0NHUurpi88gIwXODSc4zy+aaVqNfSLZ2NW2k5pvGFtLPd9vXvsIScFytHp2u+8G0Vu9pwZRcoe8x4nuZcrKdo41EOw0zLNxNpMUrJO68KfiaMcv2fhz6ZWM7X1Qw7XW1koMcs9ziIjJ5g91ISPosDsXu7YKjS0eiNdSwQtih9mgqaoZgqIMYEcpPJpA5ZPIjHPPXUWVrXenW93ThzKlUk3Fea2+RCKfKpLyZG5S60A64O7KcpuRkMn2JWiIv69ziTuvpwcOPTCtJtr9jLfMb5VXCj9hB7wQS3YOpj6Yzlw+7kj0Wb1HuPoO87X3yO2ahtkJkt1VT09LLMyKUkMexoEZPEAcDhGOYI5LYa5q61aFKFvSlhSTba6erz+kSnPnxhGgdir9Y1UPuUn8Zlxvdn/ahqg+d2qP8QrqHZI1DYrDUalN8vNvtgmZTd0aqobFx4MuccRGcZH4hcq3Mqaet3F1FV0k8c9PNc53xyRu4mvaXnBBHULfafTkteuptbOMd/dEsin4jNdREXVFwRVRAUREQBERAEREAUiOxSf6fqwf2VGfznUd1IDsZ1VNS3DVbqqphgaYKQgyPDQcOmz1+a53itN6TVS9X7kVVvQZJ1CQBknAWo3vcjR9qjJdd4ayUchFSESucfmPdH1IXJte7m3bUMMlDRRutttcCHsDsySjyc7wHoPqSvlVlot3dSX9PLHu/rcw40pSLjezWUV9uMdntswkt9G8ufI05bNL0yPNrRkA+JJ9FzhfPGz95v4rxnrqOBuZquCMfeeAvolnZxtaUaNNbL8zLjHlWEXCxepLqy2UR4HA1MgxE3xH3vkFjrrquCIGO3sMz+neOGGj5DqfyWpVVRNVTunqJXSSO6uct1a2MpPmqbImonn15nmqIi3JMKha0u4ixpd545qqJnAK5RURAHBrhhzQfmEAAGAAB6IiAqvlzWuGHNBHqFVEBUchgDku+dl7XWlNJaevNNqK8RW+WetbLE17Hu4miMDPug+IXAkWv1PTqepW7t6raTx067fEjOKksMuby6Kou1bM3hkjkqZXsOOrS8kH8FbIiz4rlioryJBHNDhwuAI8iiL0Boa0Ya0AegRETIJHbQVmzOoNv2aTu1HR224SYdVitm4JJ5QP62Obl64aCMZIxjrtFs0Jsxt9VM1DWXSmklp3ccD6+ubLwOHMFjG44nDw5E+XNRJVGMYz4GtbnyGFy1fhqdSc3C6nGE3lxznr13z8yl0m31Ol797k/wA4OoIWUEckNlt/E2lEgw6ZzscUrh4ZwAAeYGc9cDm2UVFv7OzpWVGNCisRiWxSisIpwt4uINaD54VfHOERZWT0qqIiAIiICqKiIAqqiIAiIgCIiAKjmtdjiaDjpkKqIAA0D4R+CYH7o/BEQFfoEVEQFVREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREB//Z"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,400;0,6..12,600;0,6..12,700;0,6..12,800;0,6..12,900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --purple-dark: #3d1a8e;
+  --purple-brand: #5f25e9;
+  --purple: #7b2ff7;
+  --purple-light: #ede9fd;
+  --purple-mid: #c4b0f9;
+  --green: #00a651;
+  --green-bg: #e6f7ee;
+  --red-bg: #fde8e8;
+  --red: #c0392b;
+  --amber-bg: #fff8e1;
+  --amber: #e67e22;
+  --bg: #f0f0f7;
+  --white: #ffffff;
+  --text: #18182e;
+  --text-mid: #50507a;
+  --text-soft: #9090b0;
+  --border: #e0e0ee;
+  --shadow: 0 2px 16px rgba(45,15,111,0.08);
+  --shadow-lg: 0 8px 32px rgba(45,15,111,0.13);
+  --radius: 16px;
+  --radius-sm: 10px;
+  --transition: 0.2s cubic-bezier(0.4,0,0.2,1);
+}
+
+body { font-family: 'Nunito Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+/* ── HEADER ── */
+.header {
+  background: var(--purple-brand);
+  padding: 0 2rem; height: 62px;
+  display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; z-index: 100;
+  box-shadow: 0 2px 12px rgba(95,37,233,0.35);
+}
+.header-logo { display: flex; align-items: center; gap: 14px; }
+.header-logo img { height: 30px; display: block;  }
+.header-divider { width: 1px; height: 20px; background: rgba(255,255,255,0.3); }
+.header-sub {
+  color: rgba(255,255,255,0.8); font-size: 11px; font-weight: 800;
+  letter-spacing: 0.12em; text-transform: uppercase;
+}
+.header-right { display: flex; align-items: center; gap: 10px; }
+.header-badge {
+  background: rgba(255,255,255,0.18); color: rgba(255,255,255,0.95);
+  font-size: 10px; font-weight: 900; padding: 4px 12px;
+  border-radius: 20px; letter-spacing: 0.1em; text-transform: uppercase;
+  border: 1px solid rgba(255,255,255,0.2);
+}
+
+/* ── CONTAINER ── */
+.container { max-width: 880px; margin: 0 auto; padding: 2rem 1.5rem 5rem; }
+
+/* ── DEMO BANNER ── */
+.demo-banner {
+  background: linear-gradient(135deg, #2d0f6f 0%, var(--purple-brand) 100%);
+  border-radius: var(--radius); padding: 1.25rem 1.75rem; margin-bottom: 1.75rem;
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  box-shadow: var(--shadow);
+}
+.demo-banner h2 { font-size: 15px; font-weight: 800; color: var(--white); margin-bottom: 4px; }
+.demo-banner p { font-size: 12px; color: rgba(255,255,255,0.65); line-height: 1.5; }
+.demo-pill {
+  background: rgba(255,255,255,0.18); color: var(--white);
+  font-size: 10px; font-weight: 900; padding: 5px 14px;
+  border-radius: 20px; white-space: nowrap; letter-spacing: 0.1em;
+  text-transform: uppercase; border: 1px solid rgba(255,255,255,0.25); flex-shrink:0;
+}
+
+/* ── STEP BAR ── */
+.step-bar {
+  display: flex; align-items: center; margin-bottom: 1.75rem;
+  background: var(--white); border-radius: var(--radius);
+  padding: 1rem 1.75rem; box-shadow: var(--shadow); border: 1px solid var(--border);
+}
+.step-item { display: flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 700; color: var(--text-soft); transition: color var(--transition); }
+.step-item.active { color: var(--purple); }
+.step-item.done { color: var(--green); }
+.step-dot {
+  width: 30px; height: 30px; border-radius: 50%; border: 2px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 800; flex-shrink: 0; transition: all var(--transition);
+}
+.step-item.active .step-dot { background: var(--purple); border-color: var(--purple); color: var(--white); box-shadow: 0 0 0 4px rgba(123,47,247,0.15); }
+.step-item.done .step-dot { background: var(--green-bg); border-color: var(--green); color: var(--green); }
+.step-line { flex: 1; height: 2px; background: var(--border); margin: 0 14px; border-radius: 2px; transition: background var(--transition); }
+
+/* ── CARD ── */
+.card {
+  background: var(--white); border-radius: var(--radius);
+  box-shadow: var(--shadow); padding: 2rem; border: 1px solid var(--border);
+  animation: fadeSlideIn 0.3s ease;
+}
+@keyframes fadeSlideIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.card-title { font-size: 11px; font-weight: 900; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-soft); margin-bottom: 1rem; }
+
+/* ── PROJECT GRID ── */
+.proj-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 2rem; }
+.proj-card {
+  padding: 12px 14px; border-radius: var(--radius-sm); border: 1.5px solid var(--border);
+  cursor: pointer; transition: all var(--transition); background: var(--white);
+  display: flex; align-items: center; gap: 10px;
+}
+.proj-card:hover { border-color: var(--purple-mid); background: #faf8ff; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(123,47,247,0.1); }
+.proj-card.selected { border-color: var(--purple); background: var(--purple-light); box-shadow: 0 0 0 3px rgba(123,47,247,0.12); }
+.proj-num {
+  width: 26px; height: 26px; border-radius: 7px; background: var(--bg);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 900; color: var(--text-soft); flex-shrink: 0;
+  transition: all var(--transition);
+}
+.proj-card.selected .proj-num { background: var(--purple); color: var(--white); }
+.proj-name { font-size: 13px; font-weight: 700; color: var(--text); }
+.proj-card.selected .proj-name { color: var(--purple-dark); }
+
+/* ── DIVIDER ── */
+.divider { height: 1px; background: var(--border); margin: 1.75rem 0; }
+
+/* ── FORM ── */
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.form-group { display: flex; flex-direction: column; gap: 6px; }
+.form-group.full { grid-column: 1 / -1; }
+label { font-size: 12px; font-weight: 800; color: var(--text-mid); letter-spacing: 0.03em; }
+input[type="text"], input[type="email"], input[type="date"], select {
+  width: 100%; padding: 10px 13px; border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm); font-family: 'Nunito Sans', sans-serif;
+  font-size: 14px; font-weight: 600; color: var(--text);
+  background: var(--white); outline: none; transition: all var(--transition);
+}
+input:focus, select:focus {
+  border-color: var(--purple);
+  box-shadow: 0 0 0 3px rgba(123,47,247,0.1);
+}
+input::placeholder { color: var(--text-soft); font-weight: 400; }
+
+/* ── TAGS ── */
+.tag-row { display: flex; flex-wrap: wrap; gap: 6px; }
+.tag {
+  padding: 6px 14px; border-radius: 20px; border: 1.5px solid var(--border);
+  font-size: 12px; font-weight: 700; cursor: pointer;
+  background: var(--white); color: var(--text-mid); transition: all var(--transition); user-select: none;
+}
+.tag:hover { border-color: var(--purple-mid); color: var(--purple); background: #faf8ff; }
+.tag.selected { background: var(--purple-light); border-color: var(--purple); color: var(--purple); }
+
+/* ── BUTTONS ── */
+.btn-row { display: flex; gap: 10px; justify-content: flex-end; margin-top: 2rem; }
+.btn-primary {
+  padding: 11px 26px; border-radius: 25px; border: none; background: var(--purple);
+  color: var(--white); font-family: 'Nunito Sans', sans-serif;
+  font-size: 14px; font-weight: 800; cursor: pointer; transition: all var(--transition);
+  box-shadow: 0 4px 14px rgba(123,47,247,0.3);
+}
+.btn-primary:hover { background: var(--purple-dark); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(123,47,247,0.4); }
+.btn-primary:active { transform: translateY(0); }
+.btn-secondary {
+  padding: 11px 20px; border-radius: 25px; border: 1.5px solid var(--border);
+  background: var(--white); color: var(--text-mid); font-family: 'Nunito Sans', sans-serif;
+  font-size: 14px; font-weight: 700; cursor: pointer; transition: all var(--transition);
+}
+.btn-secondary:hover { border-color: var(--purple-mid); color: var(--purple); background: var(--purple-light); }
+.btn-ghost {
+  padding: 7px 14px; border-radius: 20px; border: 1.5px dashed var(--border);
+  background: transparent; color: var(--text-soft); font-family: 'Nunito Sans', sans-serif;
+  font-size: 12px; font-weight: 700; cursor: pointer; transition: all var(--transition);
+}
+.btn-ghost:hover { border-color: var(--purple-mid); color: var(--purple); background: var(--purple-light); }
+.error-msg {
+  font-size: 12px; font-weight: 700; color: var(--red); margin-top: 10px;
+  padding: 10px 13px; background: var(--red-bg); border-radius: var(--radius-sm);
+  border-left: 3px solid var(--red);
+}
+
+/* ── LOADING ── */
+.loading-state {
+  text-align: center; padding: 5rem 2rem; background: var(--white);
+  border-radius: var(--radius); box-shadow: var(--shadow); border: 1px solid var(--border);
+  animation: fadeSlideIn 0.3s ease;
+}
+.spinner {
+  width: 42px; height: 42px; border: 3px solid var(--purple-light);
+  border-top-color: var(--purple); border-radius: 50%;
+  animation: spin 0.7s linear infinite; margin: 0 auto 1.25rem;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.loading-state p { font-size: 15px; font-weight: 700; color: var(--text-mid); }
+.loading-state small { font-size: 12px; color: var(--text-soft); margin-top: 6px; display: block; }
+
+/* ── SCOPE BAR ── */
+.scope-bar { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 1.5rem; }
+.scope-card {
+  background: var(--purple-light); border-radius: var(--radius-sm);
+  padding: 11px 14px; border: 1px solid var(--purple-mid);
+}
+.scope-label { font-size: 10px; font-weight: 900; color: var(--purple); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 4px; }
+.scope-value { font-size: 13px; font-weight: 800; color: var(--purple-dark); }
+
+/* ── SUMMARY ── */
+.summary-bar {
+  display: flex; flex-wrap: wrap; gap: 8px; align-items: center;
+  margin-bottom: 1.5rem; padding: 12px 16px;
+  background: var(--bg); border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+}
+.chip { padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; }
+.chip-total { background: var(--white); color: var(--text-mid); border: 1px solid var(--border); }
+.chip-alta { background: var(--red-bg); color: var(--red); }
+.chip-media { background: var(--amber-bg); color: var(--amber); }
+.chip-baja { background: var(--green-bg); color: var(--green); }
+.chip-equipos { background: var(--purple-light); color: var(--purple); }
+.chip-excluidas { background: #f0f0f0; color: var(--text-soft); }
+
+/* ── SECTION DIVIDER ── */
+.section-divider {
+  display: flex; align-items: center; gap: 12px; margin: 1.75rem 0 1.25rem;
+}
+.section-divider span {
+  font-size: 11px; font-weight: 900; color: var(--text-soft);
+  letter-spacing: 0.1em; text-transform: uppercase; white-space: nowrap;
+}
+.section-divider::before, .section-divider::after {
+  content: ''; flex: 1; height: 1px; background: var(--border);
+}
+
+/* ── TEAM BLOCKS ── */
+.team-block { margin-bottom: 1.5rem; }
+.team-header {
+  display: flex; align-items: center; justify-content: space-between;
+  font-size: 11px; font-weight: 900; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--purple-dark); padding: 9px 14px; background: var(--purple-light);
+  border-radius: var(--radius-sm); margin-bottom: 6px; border-left: 3px solid var(--purple);
+}
+.team-count {
+  font-size: 11px; font-weight: 700; color: var(--purple);
+  background: white; padding: 2px 10px; border-radius: 10px;
+  border: 1px solid var(--purple-mid);
+}
+
+/* ── TASK ROWS ── */
+.task-row {
+  display: grid; grid-template-columns: 36px 34px 1fr auto; gap: 10px; align-items: start;
+  padding: 13px 14px; border: 1.5px solid var(--border); border-radius: var(--radius-sm);
+  margin-bottom: 5px; background: var(--white); transition: all var(--transition);
+  animation: taskIn 0.25s ease both;
+}
+@keyframes taskIn {
+  from { opacity: 0; transform: translateX(-6px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+.task-row:hover { border-color: var(--purple-mid); box-shadow: 0 2px 8px rgba(123,47,247,0.08); }
+.task-row.excluded {
+  opacity: 0.38; background: var(--bg); border-style: dashed; border-color: var(--border);
+}
+.task-row.excluded .task-name { text-decoration: line-through; color: var(--text-soft); }
+
+/* ── CHECKBOX ── */
+.task-checkbox {
+  width: 22px; height: 22px; border-radius: 6px; border: 2px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: all var(--transition); flex-shrink: 0; margin-top: 1px;
+  background: var(--white);
+}
+.task-checkbox:hover { border-color: var(--purple-mid); }
+.task-checkbox.checked { background: var(--purple); border-color: var(--purple); box-shadow: 0 2px 6px rgba(123,47,247,0.3); }
+.task-checkbox.checked::after { content: '✓'; color: white; font-size: 13px; font-weight: 900; }
+
+.task-num {
+  width: 28px; height: 28px; background: var(--bg); border-radius: 7px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 800; color: var(--text-soft);
+}
+.task-name { font-size: 13px; font-weight: 800; color: var(--text); margin-bottom: 3px; line-height: 1.4; }
+.task-owner { font-size: 12px; font-weight: 600; color: var(--text-soft); margin-bottom: 2px; }
+.task-desc { font-size: 12px; color: var(--text-mid); line-height: 1.55; margin-top: 4px; }
+.task-dep { font-size: 11px; color: var(--text-soft); margin-top: 5px; font-weight: 700; }
+
+/* ── BADGE with tooltip ── */
+.badge-wrap { position: relative; display: inline-block; }
+.badge {
+  font-size: 11px; padding: 4px 10px; border-radius: 20px;
+  white-space: nowrap; font-weight: 800; cursor: default;
+}
+.badge-Alta { background: var(--red-bg); color: var(--red); }
+.badge-Media { background: var(--amber-bg); color: var(--amber); }
+.badge-Baja { background: var(--green-bg); color: var(--green); }
+.badge-wrap .tooltip {
+  visibility: hidden; opacity: 0;
+  position: absolute; right: 0; top: calc(100% + 6px);
+  background: #18182e; color: white; font-size: 11px; font-weight: 600;
+  padding: 6px 10px; border-radius: 8px; white-space: nowrap;
+  transition: opacity 0.15s; pointer-events: none; z-index: 10;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+.badge-wrap .tooltip::before {
+  content: ''; position: absolute; right: 12px; top: -4px;
+  border-left: 4px solid transparent; border-right: 4px solid transparent;
+  border-bottom: 4px solid #18182e;
+}
+.badge-wrap:hover .tooltip { visibility: visible; opacity: 1; }
+
+/* ── CUSTOM TAG ── */
+.custom-tag {
+  background: var(--purple-light); border: 1px solid var(--purple-mid);
+  color: var(--purple); font-size: 10px; font-weight: 800;
+  padding: 2px 7px; border-radius: 10px; margin-left: 5px;
+  vertical-align: middle;
+}
+
+/* ── EMPTY TEAM STATE ── */
+.team-empty {
+  text-align: center; padding: 1.5rem; color: var(--text-soft);
+  font-size: 13px; font-weight: 600; border: 1.5px dashed var(--border);
+  border-radius: var(--radius-sm); margin-bottom: 6px;
+  background: var(--bg);
+}
+
+/* ── ADD TASK ── */
+.add-task-row { padding: 6px 4px; }
+.add-task-form {
+  background: #faf8ff; border: 1.5px dashed var(--purple-mid);
+  border-radius: var(--radius-sm); padding: 16px; margin-top: 6px;
+  display: none; animation: fadeSlideIn 0.2s ease;
+}
+.add-task-form.visible { display: block; }
+.add-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
+.add-form-grid .full { grid-column: 1/-1; }
+.add-form-grid input, .add-form-grid select, .add-form-grid textarea {
+  width: 100%; padding: 9px 11px; border: 1.5px solid var(--border);
+  border-radius: 8px; font-family: 'Nunito Sans', sans-serif;
+  font-size: 13px; font-weight: 600; color: var(--text); background: var(--white); outline: none;
+  transition: border-color var(--transition);
+}
+.add-form-grid input:focus, .add-form-grid select:focus, .add-form-grid textarea:focus { border-color: var(--purple); box-shadow: 0 0 0 3px rgba(123,47,247,0.08); }
+.add-form-grid textarea { resize: vertical; min-height: 64px; font-weight: 400; }
+.add-form-btns { display: flex; gap: 8px; justify-content: flex-end; }
+.btn-add-confirm {
+  padding: 8px 18px; border-radius: 20px; border: none; background: var(--purple);
+  color: white; font-family: 'Nunito Sans', sans-serif;
+  font-size: 13px; font-weight: 800; cursor: pointer; transition: all var(--transition);
+  box-shadow: 0 2px 8px rgba(123,47,247,0.25);
+}
+.btn-add-confirm:hover { background: var(--purple-dark); }
+.btn-add-cancel {
+  padding: 8px 14px; border-radius: 20px; border: 1.5px solid var(--border);
+  background: white; color: var(--text-soft); font-family: 'Nunito Sans', sans-serif;
+  font-size: 13px; font-weight: 700; cursor: pointer;
+}
+
+/* ── ALERTS ── */
+.alert {
+  padding: 11px 14px; border-radius: var(--radius-sm); font-size: 13px;
+  font-weight: 600; margin-bottom: 10px; display: flex; align-items: flex-start; gap: 8px;
+}
+.alert-demo { background: var(--amber-bg); color: var(--amber); border-left: 3px solid var(--amber); }
+.alert-ok { background: var(--green-bg); color: var(--green); border-left: 3px solid var(--green); }
+
+/* ── SUCCESS ── */
+.success-state { text-align: center; padding: 2rem 0 1rem; animation: fadeSlideIn 0.3s ease; }
+.success-icon {
+  width: 68px; height: 68px; background: var(--green-bg); border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 1.25rem; font-size: 32px;
+  box-shadow: 0 0 0 8px rgba(0,166,81,0.1);
+}
+.success-state h3 { font-size: 22px; font-weight: 900; color: var(--text); margin-bottom: 6px; }
+.success-state p { font-size: 14px; color: var(--text-mid); margin-bottom: 1.5rem; line-height: 1.6; }
+.sheet-link {
+  display: inline-flex; align-items: center; gap: 8px; padding: 13px 30px;
+  border-radius: 25px; background: var(--purple); color: var(--white);
+  font-size: 14px; font-weight: 800; text-decoration: none; transition: all var(--transition);
+  margin-bottom: 1.75rem; box-shadow: 0 4px 14px rgba(123,47,247,0.3);
+}
+.sheet-link:hover { background: var(--purple-dark); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(123,47,247,0.4); }
+.status-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 1.5rem; text-align: left; }
+
+/* ── FOOTER ── */
+.footer {
+  margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  font-size: 11px; color: var(--text-soft); flex-wrap: wrap; gap: 8px;
+}
+.footer-left { display: flex; align-items: center; gap: 10px; }
+.footer-dot { width: 4px; height: 4px; background: var(--border); border-radius: 50%; }
+.footer a { color: var(--purple); text-decoration: none; font-weight: 700; }
+.footer a:hover { text-decoration: underline; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 600px) {
+  .proj-grid { grid-template-columns: 1fr; }
+  .form-grid { grid-template-columns: 1fr; }
+  .status-grid { grid-template-columns: 1fr; }
+  .scope-bar { grid-template-columns: 1fr 1fr; }
+  .add-form-grid { grid-template-columns: 1fr; }
+  .step-item span { display: none; }
+  .task-row { grid-template-columns: 30px 30px 1fr; }
+  .task-row .badge-wrap { display: none; }
+  .footer { justify-content: center; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-logo">
+    <img src="data:image/png;base64,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SvlVlot3dSX9PLHu/rcw40pSLjezWUV9uMdntswkt9G8ufI05bNL0yPNrRkA+JJ9FzhfPGz95v4rxnrqOBuZquCMfeeAvolnZxtaUaNNbL8zLjHlWEXCxepLqy2UR4HA1MgxE3xH3vkFjrrquCIGO3sMz+neOGGj5DqfyWpVVRNVTunqJXSSO6uct1a2MpPmqbImonn15nmqIi3JMKha0u4ixpd545qqJnAK5RURAHBrhhzQfmEAAGAAB6IiAqvlzWuGHNBHqFVEBUchgDku+dl7XWlNJaevNNqK8RW+WetbLE17Hu4miMDPug+IXAkWv1PTqepW7t6raTx067fEjOKksMuby6Kou1bM3hkjkqZXsOOrS8kH8FbIiz4rlioryJBHNDhwuAI8iiL0Boa0Ya0AegRETIJHbQVmzOoNv2aTu1HR224SYdVitm4JJ5QP62Obl64aCMZIxjrtFs0Jsxt9VM1DWXSmklp3ccD6+ubLwOHMFjG44nDw5E+XNRJVGMYz4GtbnyGFy1fhqdSc3C6nGE3lxznr13z8yl0m31Ol797k/wA4OoIWUEckNlt/E2lEgw6ZzscUrh4ZwAAeYGc9cDm2UVFv7OzpWVGNCisRiWxSisIpwt4uINaD54VfHOERZWT0qqIiAIiICqKiIAqqiIAiIgCIiAKjmtdjiaDjpkKqIAA0D4R+CYH7o/BEQFfoEVEQFVREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREB//Z" alt="Despegar" />
+    <div class="header-divider"></div>
+    <span class="header-sub">Implementaciones</span>
+  </div>
+  <div class="header-right">
+    <span class="header-badge">Demo</span>
+  </div>
+</header>
+
+<div class="container">
+
+  <div class="demo-banner">
+    <div>
+      <h2>Generador de Checklists de Implementación</h2>
+      <p>Versión demo con datos de ejemplo — los datos reales se cargarán desde el documento maestro una vez habilitado por Seguridad Informática</p>
+    </div>
+    <span class="demo-pill">Modo Demo</span>
+  </div>
+
+  <div class="step-bar">
+    <div class="step-item active" id="s1"><div class="step-dot">1</div><span>Configurar proyecto</span></div>
+    <div class="step-line"></div>
+    <div class="step-item" id="s2"><div class="step-dot">2</div><span>Revisar checklist</span></div>
+    <div class="step-line"></div>
+    <div class="step-item" id="s3"><div class="step-dot">3</div><span>Crear en Drive</span></div>
+  </div>
+
+  <!-- STEP 1 -->
+  <div id="step1" class="card">
+    <p class="card-title">Tipo de proyecto</p>
+    <div class="proj-grid" id="proj-grid"></div>
+    <div class="divider"></div>
+    <p class="card-title">Datos del proyecto</p>
+    <div class="form-grid">
+      <div class="form-group full">
+        <label>Nombre del proyecto</label>
+        <input type="text" id="proj-name" placeholder="Ej: Mercado Pago Chile" />
+      </div>
+      <div class="form-group">
+        <label>Fecha de go-live</label>
+        <input type="date" id="golive-date" />
+      </div>
+      <div class="form-group" id="posventa-group" style="opacity:0.4">
+        <label>Gestión de posventa</label>
+        <select id="posventa">
+          <option value="">— No aplica —</option>
+          <option value="Proveedor">Proveedor</option>
+          <option value="Despegar">Despegar</option>
+          <option value="Mixto">Mixto</option>
+        </select>
+      </div>
+      <div class="form-group full">
+        <label>Países</label>
+        <div class="tag-row" id="paises-grid"></div>
+      </div>
+      <div class="form-group full">
+        <label>Negocios</label>
+        <div class="tag-row" id="negocios-grid"></div>
+      </div>
+      <div class="divider" style="grid-column:1/-1; margin: 0.5rem 0"></div>
+      <p class="card-title" style="grid-column:1/-1; margin-bottom:0">Tus datos</p>
+      <div class="form-group">
+        <label>Tu nombre</label>
+        <input type="text" id="user-name" placeholder="Nombre completo" />
+      </div>
+      <div class="form-group">
+        <label>Tu email</label>
+        <input type="email" id="user-email" placeholder="tu@despegar.com" />
+      </div>
+    </div>
+    <div id="form-error" style="display:none" class="error-msg"></div>
+    <div class="btn-row">
+      <button class="btn-primary" id="btn-generate">Generar checklist →</button>
+    </div>
+  </div>
+
+  <!-- STEP 2 -->
+  <div id="step2" style="display:none">
+    <div id="step2-loading" class="loading-state">
+      <div class="spinner"></div>
+      <p id="loading-msg">Leyendo documento maestro...</p>
+      <small>Esto puede tardar unos segundos</small>
+    </div>
+    <div id="step2-content" style="display:none" class="card">
+      <div class="scope-bar" id="scope-bar"></div>
+      <div class="summary-bar" id="summary-bar"></div>
+      <div id="checklist-content"></div>
+      <div class="btn-row">
+        <button class="btn-secondary" id="btn-back">← Volver</button>
+        <button class="btn-primary" id="btn-create">Crear Google Sheet</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 3 -->
+  <div id="step3" style="display:none">
+    <div id="step3-loading" class="loading-state">
+      <div class="spinner"></div>
+      <p id="step3-msg">Creando Google Sheet...</p>
+      <small>Configurando tareas y compartiendo con el equipo</small>
+    </div>
+    <div id="step3-content" style="display:none" class="card"></div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-left">
+      <span>Implementaciones Despegar</span>
+      <div class="footer-dot"></div>
+      <span>v2.0 — Demo</span>
+      <div class="footer-dot"></div>
+      <span id="footer-date"></span>
+    </div>
+    <div>
+      <a href="mailto:derojas@despegar.com">Reportar un problema</a>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+document.getElementById('footer-date').textContent = new Date().toLocaleDateString('es-AR', {year:'numeric',month:'long',day:'numeric'});
+
+const TIPOS = [
+  "Nueva fuente de inventario","NDC","Nueva consola","Ancillaries via Branch access",
+  "Ancillaries Scrapping","Consolidadores","Bimoneda","Loyalty / Pasaporte",
+  "Arbitraje","Nuevos medios de pago","Hoteles","ONA"
+];
+const PAISES = ["AR","CL","CO","PE","EC","MX","BR","Todos"];
+const NEGOCIOS = ["B2C","B2B","B2B2C","Todos"];
+const TOOLTIPS = {
+  Alta: "Crítica — debe completarse antes del go-live",
+  Media: "Importante — recomendada antes del lanzamiento",
+  Baja: "Opcional — puede completarse post go-live"
+};
+
+let selProj=null, selPaises=[], selNegocios=[], checklist=null;
+let taskStates={}, customTaskCounter=0;
+
+const DEMO = {
+  equipos:[
+    {nombre:"Comercial",tareas:[
+      {num:"1",tarea:"Validar acuerdo comercial con proveedor",responsable:"Gerencia Comercial",descripcion:"Revisar y firmar términos comerciales, SLA y estructura de comisiones acordada.",dependencia:"Ninguna",prioridad:"Alta"},
+      {num:"2",tarea:"Definir estructura de fees y comisiones",responsable:"Revenue Management",descripcion:"Establecer la grilla de comisionamiento por segmento de negocio y país.",dependencia:"1",prioridad:"Media"}
+    ]},
+    {nombre:"Producto Checkout",tareas:[
+      {num:"3",tarea:"Análisis de impacto en flujo de checkout",responsable:"Product Owner Checkout",descripcion:"Mapear todos los puntos de contacto en el funnel de compra.",dependencia:"Ninguna",prioridad:"Alta"},
+      {num:"4",tarea:"Desarrollo de integración técnica",responsable:"Tech Lead",descripcion:"Implementar endpoints requeridos según especificaciones técnicas del proveedor.",dependencia:"3",prioridad:"Alta"},
+      {num:"5",tarea:"QA funcional y regresión",responsable:"QA Team",descripcion:"Ejecutar suite de pruebas en staging. Cobertura mínima: flujos críticos de compra.",dependencia:"4",prioridad:"Alta"}
+    ]},
+    {nombre:"CX Hispa",tareas:[
+      {num:"6",tarea:"Actualizar scripts de atención al cliente",responsable:"CX Lead Hispa",descripcion:"Adaptar guiones para consultas relacionadas al nuevo producto.",dependencia:"Ninguna",prioridad:"Media"},
+      {num:"7",tarea:"Capacitar agentes de atención",responsable:"Capacitación CX",descripcion:"Training obligatorio para agentes que atiendan los países del scope.",dependencia:"6",prioridad:"Media"}
+    ]},
+    {nombre:"Control de Gestión",tareas:[
+      {num:"8",tarea:"Configurar reportes de seguimiento",responsable:"Control de Gestión",descripcion:"Crear dashboard de KPIs: conversión, volumen, revenue post-lanzamiento.",dependencia:"Ninguna",prioridad:"Media"}
+    ]},
+    {nombre:"Seguridad Informática",tareas:[
+      {num:"9",tarea:"Revisión de seguridad y compliance",responsable:"InfoSec Lead",descripcion:"Validar que la integración cumple estándares corporativos y PCI DSS.",dependencia:"4",prioridad:"Alta"}
+    ]},
+    {nombre:"Capacitación",tareas:[
+      {num:"10",tarea:"Plan de capacitación interna",responsable:"Equipo Capacitación",descripcion:"Diseñar y ejecutar plan de formación para equipos comerciales y operativos.",dependencia:"Ninguna",prioridad:"Baja"}
+    ]}
+  ]
+};
+
+// Build project grid
+const pg = document.getElementById('proj-grid');
+TIPOS.forEach((t,i) => {
+  const c = document.createElement('div');
+  c.className='proj-card';
+  c.innerHTML=`<div class="proj-num">${String(i+1).padStart(2,'0')}</div><div class="proj-name">${t}</div>`;
+  c.onclick=()=>{
+    document.querySelectorAll('.proj-card').forEach(x=>x.classList.remove('selected'));
+    c.classList.add('selected'); selProj=i+1;
+    document.getElementById('posventa-group').style.opacity=[1,2,6,7].includes(selProj)?'1':'0.4';
+  };
+  pg.appendChild(c);
+});
+
+function buildTags(id,items,onToggle){
+  const el=document.getElementById(id);
+  items.forEach(v=>{
+    const t=document.createElement('div'); t.className='tag'; t.textContent=v;
+    t.onclick=()=>onToggle(v,t,el); el.appendChild(t);
+  });
+}
+buildTags('paises-grid',PAISES,(v,tag,el)=>{
+  if(v==='Todos'){selPaises=['Todos'];el.querySelectorAll('.tag').forEach(t=>t.classList.remove('selected'));tag.classList.add('selected');}
+  else{el.querySelectorAll('.tag').forEach(t=>{if(t.textContent==='Todos')t.classList.remove('selected');});selPaises=selPaises.filter(x=>x!=='Todos');tag.classList.toggle('selected');tag.classList.contains('selected')?selPaises.push(v):(selPaises=selPaises.filter(x=>x!==v));}
+});
+buildTags('negocios-grid',NEGOCIOS,(v,tag,el)=>{
+  if(v==='Todos'){selNegocios=['Todos'];el.querySelectorAll('.tag').forEach(t=>t.classList.remove('selected'));tag.classList.add('selected');}
+  else{el.querySelectorAll('.tag').forEach(t=>{if(t.textContent==='Todos')t.classList.remove('selected');});selNegocios=selNegocios.filter(x=>x!=='Todos');tag.classList.toggle('selected');tag.classList.contains('selected')?selNegocios.push(v):(selNegocios=selNegocios.filter(x=>x!==v));}
+});
+
+document.getElementById('btn-generate').onclick=()=>{
+  const err=document.getElementById('form-error'); err.style.display='none';
+  if(!selProj) return showErr('Seleccioná un tipo de proyecto.');
+  if(!document.getElementById('proj-name').value.trim()) return showErr('Ingresá el nombre del proyecto.');
+  if(!selPaises.length) return showErr('Seleccioná al menos un país.');
+  if(!selNegocios.length) return showErr('Seleccioná al menos un negocio.');
+  if(!document.getElementById('user-name').value.trim()) return showErr('Ingresá tu nombre.');
+  if(!document.getElementById('user-email').value.trim()) return showErr('Ingresá tu email.');
+  goStep(2); loadChecklist();
+};
+
+function showErr(m){const e=document.getElementById('form-error');e.textContent=m;e.style.display='block';}
+function setStep(n){[1,2,3].forEach(i=>{const el=document.getElementById('s'+i);el.classList.remove('active','done');if(i<n)el.classList.add('done');else if(i===n)el.classList.add('active');});}
+function goStep(n){[1,2,3].forEach(i=>document.getElementById('step'+i).style.display='none');document.getElementById('step'+n).style.display='block';setStep(n);window.scrollTo({top:0,behavior:'smooth'});}
+
+async function loadChecklist(){
+  const msgs=['Leyendo documento maestro...','Filtrando tareas del proyecto...','Asignando prioridades...','Organizando por equipos...'];
+  let mi=0; const iv=setInterval(()=>{if(++mi<msgs.length)document.getElementById('loading-msg').textContent=msgs[mi];},950);
+  await new Promise(r=>setTimeout(r,3300)); clearInterval(iv);
+  checklist=JSON.parse(JSON.stringify(DEMO));
+  taskStates={};
+  checklist.equipos.forEach(eq=>eq.tareas.forEach(t=>{taskStates[tid(eq.nombre,t.num)]=true;}));
+  renderChecklist();
+}
+
+function tid(eq,num){return eq+'__'+num;}
+
+function toggleTask(id){
+  taskStates[id]=!taskStates[id];
+  const row=document.getElementById('row-'+id);
+  const cb=document.getElementById('cb-'+id);
+  if(row)row.classList.toggle('excluded',!taskStates[id]);
+  if(cb)cb.classList.toggle('checked',taskStates[id]);
+  refreshSummary(); updateTeamCounts();
+}
+
+function updateTeamCounts(){
+  checklist.equipos.forEach(eq=>{
+    const inc=eq.tareas.filter(t=>taskStates[tid(eq.nombre,t.num)]!==false).length;
+    const el=document.getElementById('tc-'+eq.nombre.replace(/\s/g,'_'));
+    if(el)el.textContent=inc+' tarea'+(inc!==1?'s':'');
+    const emptyEl=document.getElementById('empty-'+eq.nombre.replace(/\s/g,'_'));
+    if(emptyEl)emptyEl.style.display=inc===0?'block':'none';
+  });
+}
+
+function refreshSummary(){
+  const all=checklist.equipos.flatMap(eq=>eq.tareas.map(t=>{return{...t,_id:tid(eq.nombre,t.num)}}));
+  const inc=all.filter(t=>taskStates[t._id]!==false);
+  const excl=all.length-inc.length;
+  const alta=inc.filter(t=>t.prioridad==='Alta').length;
+  const media=inc.filter(t=>t.prioridad==='Media').length;
+  const baja=inc.filter(t=>t.prioridad==='Baja').length;
+  document.getElementById('summary-bar').innerHTML=`
+    <span class="chip chip-total">📋 ${inc.length} tareas incluidas</span>
+    <span class="chip chip-equipos">👥 ${checklist.equipos.length} equipos</span>
+    <span class="chip chip-alta">🔴 ${alta} alta</span>
+    <span class="chip chip-media">🟡 ${media} media</span>
+    <span class="chip chip-baja">🟢 ${baja} baja</span>
+    ${excl>0?`<span class="chip chip-excluidas">✕ ${excl} excluida${excl!==1?'s':''}</span>`:''}
+  `;
+  const btn=document.getElementById('btn-create');
+  if(btn)btn.textContent=`Crear Google Sheet (${inc.length} tareas) →`;
+}
+
+function renderChecklist(){
+  document.getElementById('step2-loading').style.display='none';
+  document.getElementById('step2-content').style.display='block';
+  const golive=document.getElementById('golive-date').value;
+  const goliveDisplay=golive?new Date(golive+'T12:00:00').toLocaleDateString('es-AR'):'No definida';
+  const paisesStr=selPaises.join(', ');
+  const region=selPaises.includes('Todos')?'Hispa + Brasil':selPaises.includes('BR')&&selPaises.length===1?'Brasil':selPaises.includes('BR')?'Hispa + Brasil':'Hispa';
+  document.getElementById('scope-bar').innerHTML=`
+    <div class="scope-card"><div class="scope-label">Tipo</div><div class="scope-value">${TIPOS[selProj-1]}</div></div>
+    <div class="scope-card"><div class="scope-label">Países</div><div class="scope-value">${paisesStr}</div></div>
+    <div class="scope-card"><div class="scope-label">Go-live</div><div class="scope-value">${goliveDisplay}</div></div>
+    <div class="scope-card"><div class="scope-label">Región</div><div class="scope-value">${region}</div></div>`;
+  refreshSummary();
+  let html=`<div class="alert alert-demo">⚠️ Modo demo — tareas de ejemplo. Tildá o destildá las que apliquen, y agregá tareas manuales si hace falta.</div>
+  <div class="section-divider"><span>Tareas por equipo</span></div>`;
+  checklist.equipos.forEach((eq,eqi)=>{
+    const safe=eq.nombre.replace(/\s/g,'_');
+    const inc=eq.tareas.filter(t=>taskStates[tid(eq.nombre,t.num)]!==false).length;
+    html+=`<div class="team-block">
+      <div class="team-header">
+        <span>▌ ${eq.nombre}</span>
+        <span class="team-count" id="tc-${safe}">${inc} tarea${inc!==1?'s':''}</span>
+      </div>
+      <div id="empty-${safe}" class="team-empty" style="display:${inc===0?'block':'none'}">Sin tareas incluidas para este equipo</div>`;
+    eq.tareas.forEach((t,ti)=>{
+      const id=tid(eq.nombre,t.num);
+      const included=taskStates[id]!==false;
+      const icon=t.prioridad==='Alta'?'🔴':t.prioridad==='Media'?'🟡':'🟢';
+      const isCustom=t._custom?`<span class="custom-tag">Manual</span>`:'';
+      const delay=((eqi*3)+ti)*0.04;
+      html+=`<div class="task-row ${included?'':'excluded'}" id="row-${id}" style="animation-delay:${delay}s">
+        <div class="task-checkbox ${included?'checked':''}" id="cb-${id}" onclick="toggleTask('${id}')"></div>
+        <div class="task-num">${t.num}</div>
+        <div>
+          <div class="task-name">${t.tarea}${isCustom}</div>
+          <div class="task-owner">👤 ${t.responsable}</div>
+          <div class="task-desc">${t.descripcion}</div>
+          ${t.dependencia&&t.dependencia!=='Ninguna'?`<div class="task-dep">🔗 Depende de tarea #${t.dependencia}</div>`:''}
+        </div>
+        <div class="badge-wrap">
+          <span class="badge badge-${t.prioridad}">${icon} ${t.prioridad}</span>
+          <div class="tooltip">${TOOLTIPS[t.prioridad]}</div>
+        </div>
+      </div>`;
+    });
+    html+=`
+      <div class="add-task-row">
+        <button class="btn-ghost" onclick="toggleAddForm('${safe}')">+ Agregar tarea a ${eq.nombre}</button>
+      </div>
+      <div class="add-task-form" id="addform-${safe}">
+        <div class="add-form-grid">
+          <div class="full"><input type="text" id="new-tarea-${safe}" placeholder="Nombre de la tarea *" /></div>
+          <input type="text" id="new-resp-${safe}" placeholder="Responsable *" />
+          <select id="new-prio-${safe}">
+            <option value="Alta">🔴 Alta prioridad</option>
+            <option value="Media" selected>🟡 Media prioridad</option>
+            <option value="Baja">🟢 Baja prioridad</option>
+          </select>
+          <div class="full"><textarea id="new-desc-${safe}" placeholder="Descripción (opcional)"></textarea></div>
+          <input type="text" id="new-dep-${safe}" placeholder="Dependencia — ej: tarea #3 (opcional)" />
+        </div>
+        <div class="add-form-btns">
+          <button class="btn-add-cancel" onclick="toggleAddForm('${safe}')">Cancelar</button>
+          <button class="btn-add-confirm" onclick="addTask('${eq.nombre}','${safe}')">Agregar tarea</button>
+        </div>
+      </div>
+    </div>`;
+  });
+  document.getElementById('checklist-content').innerHTML=html;
+}
+
+function toggleAddForm(safe){
+  const f=document.getElementById('addform-'+safe);
+  f.classList.toggle('visible');
+  if(f.classList.contains('visible'))document.getElementById('new-tarea-'+safe).focus();
+}
+
+function addTask(equipoNombre,safe){
+  const tarea=document.getElementById('new-tarea-'+safe).value.trim();
+  const resp=document.getElementById('new-resp-'+safe).value.trim();
+  const prio=document.getElementById('new-prio-'+safe).value;
+  const desc=document.getElementById('new-desc-'+safe).value.trim();
+  const dep=document.getElementById('new-dep-'+safe).value.trim();
+  if(!tarea){alert('El nombre de la tarea es obligatorio.');return;}
+  if(!resp){alert('El responsable es obligatorio.');return;}
+  customTaskCounter++;
+  const newNum='M'+customTaskCounter;
+  const eq=checklist.equipos.find(e=>e.nombre===equipoNombre);
+  if(eq){eq.tareas.push({num:newNum,tarea,responsable:resp,descripcion:desc||'Tarea agregada manualmente.',dependencia:dep||'Ninguna',prioridad:prio,_custom:true});taskStates[tid(equipoNombre,newNum)]=true;}
+  renderChecklist();
+  setTimeout(()=>{const el=document.getElementById('row-'+tid(equipoNombre,newNum));if(el)el.scrollIntoView({behavior:'smooth',block:'center'});},100);
+}
+
+document.getElementById('btn-back').onclick=()=>{
+  document.getElementById('step2-loading').style.display='block';
+  document.getElementById('step2-content').style.display='none';
+  goStep(1);
+};
+
+document.getElementById('btn-create').onclick=async()=>{
+  const all=checklist.equipos.flatMap(eq=>eq.tareas.map(t=>{return{...t,_id:tid(eq.nombre,t.num)}}));
+  const inc=all.filter(t=>taskStates[t._id]!==false);
+  if(!inc.length){alert('No hay tareas incluidas. Tildá al menos una antes de continuar.');return;}
+  goStep(3); await createSheet(inc);
+};
+
+async function createSheet(includedTasks){
+  const msgs=['Creando Google Sheet...','Cargando tareas...','Compartiendo con el equipo...','Registrando en repositorio...'];
+  let mi=0; const iv=setInterval(()=>{if(++mi<msgs.length)document.getElementById('step3-msg').textContent=msgs[mi];},1300);
+  await new Promise(r=>setTimeout(r,5000)); clearInterval(iv);
+  renderSuccess(includedTasks);
+}
+
+function renderSuccess(inc){
+  document.getElementById('step3-loading').style.display='none';
+  const cont=document.getElementById('step3-content'); cont.style.display='block';
+  const custom=inc.filter(t=>t._custom).length;
+  cont.innerHTML=`<div class="success-state">
+    <div class="success-icon">✓</div>
+    <h3>¡Checklist creada!</h3>
+    <p>${inc.length} tareas incluidas · ${checklist.equipos.length} equipos · ${TIPOS[selProj-1]}${custom>0?`<br><span style="font-size:12px;color:var(--purple)">${custom} tarea${custom!==1?'s':''} manual${custom!==1?'es':''} incluida${custom!==1?'s':''}</span>`:''}</p>
+    <a class="sheet-link" href="#" onclick="alert('Versión demo: el Sheet no se crea realmente. Con Google Sheets conectado se abrirá aquí.'); return false;">Abrir en Google Sheets ↗</a>
+    <div class="status-grid">
+      <div class="alert alert-ok">✓ Registrado en repositorio central</div>
+      <div class="alert alert-ok">✓ Compartido con el equipo</div>
+      <div class="alert alert-ok">✓ iparodi@despegar.com</div>
+      <div class="alert alert-ok">✓ derojas@despegar.com</div>
+    </div>
+    <div class="alert alert-demo">⚠️ Versión demo — el Sheet no se crea realmente. Una vez habilitado por Seguridad Informática, todo el flujo será automático.</div>
+    <button class="btn-secondary" onclick="location.reload()">+ Nueva checklist</button>
+  </div>`;
+}
+</script>
+</body>
+</html>
